@@ -1,0 +1,15 @@
+#if (!requireNamespace("BiocManager", quietly = TRUE))
+#    install.packages("BiocManager")
+#BiocManager::install("survcomp", version = "3.9")
+
+library(survcomp)
+rt=read.table("risk.txt",header=T,sep="\t",check.names=F,row.names=1)
+cindex <- concordance.index(x=rt$riskScore,
+           surv.time = rt$futime, 
+           surv.event = rt$fustat,
+           method = "noether")
+cindex$c.index
+cindex$se
+cindex$lower
+cindex$upper
+cindex$p.value
