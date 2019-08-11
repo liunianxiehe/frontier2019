@@ -1,0 +1,23 @@
+
+rt=read.table("risk.txt",header=T,sep="\t",check.names=F,row.names=1)
+rt=rt[order(rt$riskScore),]
+riskClass=rt[,"risk"]
+lowLength=length(riskClass[riskClass=="low"])
+highLength=length(riskClass[riskClass=="high"])
+color=as.vector(rt$fustat)
+color[color==1]="red"
+color[color==0]="green"
+pdf(file="survStat.pdf",width = 10, height = 6)
+plot(rt$futime,
+     pch=19,
+     xlab="Patients (increasing risk socre)",
+     ylab="Survival time (years)",
+     col=color)
+legend("topright", 
+       c("Dead", "Alive"),
+       pch=19,
+       col=c("red","green"))
+abline(v=lowLength,lty=2)
+dev.off()
+
+
